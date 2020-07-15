@@ -1,11 +1,14 @@
-MeshObj obj;
+SvgObj obj;
 
 void setup() {
-  size(50, 50, P2D);
-  obj = new MeshObj(loadShape("test1.svg"));
-  //surface.setSize(sw.width, sw.height); 
+  size(1920, 1080, FX2D);
+  frameRate(30);
+  obj = new SvgObj(loadShape("test2.svg"));
 }
 
+int y = 200;
+
 void draw() {
-  obj.draw();
+  obj.draw(0, y);
+  y--;
 }
