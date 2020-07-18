@@ -11,8 +11,8 @@ int yPos = 0;
 int childStep = 500;
 int pointStep = 25;
 int alpha = 35;
-float strokeWeightVal = 0.5;
-float shake = 2.0;
+float strokeWeightVal = 0.75;
+float shake = 1;
 
 void setup() {
   size(50, 50, P2D);
@@ -23,11 +23,12 @@ void setup() {
 void draw() { 
   if (firstRun) {
     obj = new SvgObj(loadShape("test2.svg"), w, h, childStep, pointStep, alpha, strokeWeightVal, shake);
+    obj.smoothObj();
     
     surface.setSize(obj.w / scaler, obj.h / scaler);
     firstRun = false;
   } else {
-    background(255);
+    background(0);
     
     obj.draw(0, yPos);
     yPos += vertStep;

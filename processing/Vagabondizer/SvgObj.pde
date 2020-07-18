@@ -237,8 +237,10 @@ class SvgObjChild {
     gfx.beginShape();
     for (int i=0; i<pointsCounter; i++) {
       PVector p = points.get(i);
-      p.x += shake * (random(1) - 0.5);
-      p.y += shake * (random(1) - 0.5);
+      if (shake > 0.001) {
+        p.x += shake * (random(1) - 0.5);
+        p.y += shake * (random(1) - 0.5);
+      }
       gfx.vertex(p.x, p.y);
     }
     gfx.endShape();
