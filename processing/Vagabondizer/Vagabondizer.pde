@@ -1,8 +1,8 @@
 SvgObj obj;
 
-int scaler = 1;
-int w = 1080;
-int h = 1080;
+int scaler = 2;
+int w = 2160;
+int h = 2160;
 int vertStep = -5;
 
 boolean firstRun = true;
@@ -12,7 +12,9 @@ int childStep = 500;
 int pointStep = 25;
 int alpha = 35;
 float strokeWeightVal = 0.75;
-float shake = 1;
+float shake = 2;
+
+boolean record = true;
 
 void setup() {
   size(50, 50, P2D);
@@ -36,5 +38,10 @@ void draw() {
     image(obj.gfx, 0, 0, width, height);
     
     filter(INVERT);
+    
+    if (record) {
+        String savePath = sketchPath("") + "/render/" + fileName + "_" + zeroPadding(counter++,10000) + ".png";
+        obj.gfx.save(savePath);
+    }
   }
 }
