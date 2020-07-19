@@ -4,6 +4,7 @@ boolean firstRun = true;
 String url = "test2.svg";
 int w = 1920;
 boolean record = true;
+boolean refine = true;
 int scaler = 3;
 int childStep = 100;
 int pointStep = 15;
@@ -23,8 +24,10 @@ void setup() {
 void draw() { 
   if (firstRun) {
     obj = new SvgObj(loadShape(url), w, childStep, pointStep, alpha, strokeWeightVal, shake);
-    obj.smoothObj();
-    
+    if (refine) {
+      obj.refineObj();
+      obj.cleanObj();
+    }
     surface.setSize(obj.w / scaler, obj.h / scaler);
     firstRun = false;
   } else {

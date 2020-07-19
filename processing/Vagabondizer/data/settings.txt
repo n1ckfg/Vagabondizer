@@ -5,7 +5,7 @@ Render Width
 1920
 
 Window Scale
-3
+2
 
 Record
 true
@@ -23,4 +23,7 @@ Stroke
 0.5
 
 Shake
-0.5
+2
+
+Refine
+true

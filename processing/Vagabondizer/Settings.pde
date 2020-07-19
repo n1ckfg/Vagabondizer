@@ -10,6 +10,7 @@ class Settings {
         if (data[i].equals("Render Width")) w = setInt(data[i+1]);
         if (data[i].equals("Window Scale")) scaler = setInt(data[i+1]); 
         if (data[i].equals("Record")) record = setBoolean(data[i+1]); 
+        if (data[i].equals("Refine")) refine = setBoolean(data[i+1]); 
         if (data[i].equals("Child Step")) childStep = setInt(data[i+1]); 
         if (data[i].equals("Point Step")) pointStep = setInt(data[i+1]); 
         if (data[i].equals("Alpha")) alpha = setInt(data[i+1]); 
