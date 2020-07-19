@@ -1,16 +1,14 @@
 SvgObj obj;
+boolean firstRun = true;
+float yPos = 0;
 
-boolean record = true;
-int scaler = 3;
 int w = 3840;
 int h = 2160;
-int vertStep = -5;
-
-boolean firstRun = true;
-int yPos = 0;
-
-int childStep = 500;
-int pointStep = 25;
+boolean record = true;
+int scaler = 3;
+float vertStep = -1;
+int childStep = 100;
+int pointStep = 15;
 int alpha = 35;
 float strokeWeightVal = 0.2;
 float shake = 2;
@@ -26,6 +24,7 @@ void draw() {
   if (firstRun) {
     obj = new SvgObj(loadShape("test2.svg"), w, h, childStep, pointStep, alpha, strokeWeightVal, shake);
     obj.refineObj();
+    obj.cleanObj();
     
     surface.setSize(obj.w / scaler, obj.h / scaler);
     firstRun = false;

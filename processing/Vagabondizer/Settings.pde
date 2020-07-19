@@ -6,6 +6,17 @@ class Settings {
     try {
       data = loadStrings(_s);
       for (int i=0;i<data.length;i++) {
+        if (data[i].equals("Render Width")) w = setInt(data[i+1]);
+        if (data[i].equals("Render Height")) h = setInt(data[i+1]); 
+        if (data[i].equals("Window Scale")) scaler = setInt(data[i+1]); 
+        if (data[i].equals("Record")) record = setBoolean(data[i+1]); 
+        if (data[i].equals("Vertical Step")) vertStep = setFloat(data[i+1]); 
+        if (data[i].equals("Child Step")) childStep = setInt(data[i+1]); 
+        if (data[i].equals("Point Step")) pointStep = setInt(data[i+1]); 
+        if (data[i].equals("Alpha")) alpha = setInt(data[i+1]); 
+        if (data[i].equals("Stroke")) strokeWeightVal = setFloat(data[i+1]); 
+        if (data[i].equals("Shake")) shake = setFloat(data[i+1]); 
+        
         /*
         if (data[i].equals("Points Per Pass")) numDrawers = setInt(data[i+1]);
         if (data[i].equals("Strokes Per Point")) numDrawerReps = setInt(data[i+1]);
