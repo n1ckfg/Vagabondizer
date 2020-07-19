@@ -23,8 +23,7 @@ void setup() {
 void draw() { 
   if (firstRun) {
     obj = new SvgObj(loadShape(url), w, childStep, pointStep, alpha, strokeWeightVal, shake);
-    obj.refineObj();
-    obj.cleanObj();
+    obj.smoothObj();
     
     surface.setSize(obj.w / scaler, obj.h / scaler);
     firstRun = false;
