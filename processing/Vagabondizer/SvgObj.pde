@@ -97,9 +97,9 @@ class SvgObj {
     w = _w;
     h = _h;
     gfx = createGraphics(w, h, P2D);
-    gfx.beginDraw();
-    gfx.background(bgColor);
-    gfx.endDraw();
+    //gfx.beginDraw();
+    //gfx.background(bgColor);
+    //gfx.endDraw();
     
     scaler = (float) gfx.width / (float) shp.width;
     
@@ -112,7 +112,7 @@ class SvgObj {
   
   void draw(float x, float y) {   
     gfx.beginDraw();
-    gfx.background(bgColor);
+    //gfx.background(bgColor);
     gfx.pushMatrix();
     gfx.translate(x, y);
     gfx.scale(scaler);
