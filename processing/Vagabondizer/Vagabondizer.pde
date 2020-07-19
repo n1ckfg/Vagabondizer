@@ -2,6 +2,7 @@ SvgObj obj;
 boolean firstRun = true;
 float yPos = 0;
 
+String url = "test2.svg";
 int w = 3840;
 int h = 2160;
 boolean record = true;
@@ -13,16 +14,18 @@ int alpha = 35;
 float strokeWeightVal = 0.2;
 float shake = 2;
 
+Settings settings;
 
 void setup() {
   size(50, 50, P2D);
+  settings = new Settings("settings.txt");
   frameRate(60);
 }
 
 
 void draw() { 
   if (firstRun) {
-    obj = new SvgObj(loadShape("test2.svg"), w, h, childStep, pointStep, alpha, strokeWeightVal, shake);
+    obj = new SvgObj(loadShape(url), w, h, childStep, pointStep, alpha, strokeWeightVal, shake);
     obj.refineObj();
     obj.cleanObj();
     
