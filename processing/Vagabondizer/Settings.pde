@@ -8,34 +8,14 @@ class Settings {
       for (int i=0;i<data.length;i++) {
         if (data[i].equals("Svg Url")) url = setString(data[i+1]);
         if (data[i].equals("Render Width")) w = setInt(data[i+1]);
-        if (data[i].equals("Render Height")) h = setInt(data[i+1]); 
         if (data[i].equals("Window Scale")) scaler = setInt(data[i+1]); 
         if (data[i].equals("Record")) record = setBoolean(data[i+1]); 
-        if (data[i].equals("Vertical Step")) vertStep = setFloat(data[i+1]); 
         if (data[i].equals("Child Step")) childStep = setInt(data[i+1]); 
         if (data[i].equals("Point Step")) pointStep = setInt(data[i+1]); 
         if (data[i].equals("Alpha")) alpha = setInt(data[i+1]); 
         if (data[i].equals("Stroke")) strokeWeightVal = setFloat(data[i+1]); 
         if (data[i].equals("Shake")) shake = setFloat(data[i+1]); 
-        
-        /*
-        if (data[i].equals("Points Per Pass")) numDrawers = setInt(data[i+1]);
-        if (data[i].equals("Strokes Per Point")) numDrawerReps = setInt(data[i+1]);
-        if (data[i].equals("Stroke Length")) numStrokes = setInt(data[i+1]);
-        if (data[i].equals("Passes Per Image")) numRepsMax = setInt(data[i+1]);
-        if (data[i].equals("Save Filename")) fileName = setString(data[i+1]);
-        if (data[i].equals("Brush Filename")) brushFile = setString(data[i+1]);
-        if (data[i].equals("Brush Alpha Decrease")) alphaDecrease = setInt(data[i+1]);
-        if (data[i].equals("Brush Size")) brushSizeOrig = setFloat(data[i+1]);
-        if (data[i].equals("Brush Minimum")) brushSizeMin = setFloat(data[i+1]);
-        if (data[i].equals("Brush Maximum")) brushSizeMax = setFloat(data[i+1]);
-        if (data[i].equals("Leak Chance")) leakRandom = setFloat(data[i+1]);
-        if (data[i].equals("Scatter")) scatter = setFloat(data[i+1]);
-        if (data[i].equals("Clean Outlines")) cleanOutlines = setBoolean(data[i+1]);
-        if (data[i].equals("Use Base Image")) useBase = setBoolean(data[i+1]);
-        if (data[i].equals("Brush Shrink Amount")) shrinkAmount = setFloat(data[i+1]);     
-         */
-       }
+      }
     } 
     catch(Exception e) {
       println("Couldn't load settings file. Using defaults.");

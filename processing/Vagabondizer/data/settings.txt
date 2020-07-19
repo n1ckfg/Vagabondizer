@@ -1,0 +1,26 @@
+Svg Url
+test2.svg
+
+Render Width
+1920
+
+Window Scale
+3
+
+Record
+true
+
+Child Step
+100
+
+Point Step
+15
+
+Alpha
+35
+
+Stroke
+0.5
+
+Shake
+0.5

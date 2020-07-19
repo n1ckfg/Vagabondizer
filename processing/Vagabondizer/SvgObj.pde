@@ -13,8 +13,9 @@ class SvgObj {
   float shake;
   float scaler;
   color bgColor;
+  boolean finished = false;
   
-  SvgObj(PShape _shape, int _w, int _h, int _childStep, int _pointStep, int _alpha, float _strokeWeightVal, float _shake) {
+  SvgObj(PShape _shape, int _w, int _childStep, int _pointStep, int _alpha, float _strokeWeightVal, float _shake) {
     shp = _shape;   
     pointStep = _pointStep;
     childStep = _childStep;
@@ -26,7 +27,7 @@ class SvgObj {
     scaler = 1.0;
     bgColor = color(255);
     
-    init(_w, _h);
+    init(_w);
   }
   
   void smoothObj() {
@@ -93,15 +94,11 @@ class SvgObj {
     }
   }
   
-  void init(int _w, int _h) {
-    w = _w;
-    h = _h;
+  void init(int _w) {
+    w = _w;  
+    scaler = (float) w / (float) shp.width;
+    h = int(scaler * shp.height);
     gfx = createGraphics(w, h, P2D);
-    //gfx.beginDraw();
-    //gfx.background(bgColor);
-    //gfx.endDraw();
-    
-    scaler = (float) gfx.width / (float) shp.width;
     
     obj = new ArrayList<SvgObjChild>();
     
@@ -125,11 +122,18 @@ class SvgObj {
     
     if (childCounter < obj.size() - childStep) {
       childCounter += childStep;
+      finished = false;
     } else {
       childCounter = obj.size() - 1;
     }
     
     gfx.endDraw();
+
+    for (int i=0; i<obj.size(); i++) {
+      if (!obj.get(i).finished) return;
+    }
+    
+    finished = true;
   }
   
 }
@@ -147,7 +151,8 @@ class SvgObjChild {
   PGraphics gfx;
   int alpha;
   float shake;
-
+  boolean finished = false;
+  
   SvgObjChild(PShape _shape, PGraphics _gfx, int _pointStep, int _alpha, float _strokeWeightVal, float _shake) {
     gfx = _gfx;
     pointStep = _pointStep;
@@ -247,8 +252,10 @@ class SvgObjChild {
 
     if (pointsCounter < points.size()-pointStep) {
       pointsCounter += pointStep;
+      finished = false;
     } else {
       pointsCounter = points.size() - 1;
+      finished = true;
     }
   }
    

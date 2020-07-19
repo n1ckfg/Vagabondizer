@@ -1,13 +1,10 @@
 SvgObj obj;
 boolean firstRun = true;
-float yPos = 0;
 
 String url = "test2.svg";
-int w = 3840;
-int h = 2160;
+int w = 1920;
 boolean record = true;
 int scaler = 3;
-float vertStep = -1;
 int childStep = 100;
 int pointStep = 15;
 int alpha = 35;
@@ -25,7 +22,7 @@ void setup() {
 
 void draw() { 
   if (firstRun) {
-    obj = new SvgObj(loadShape(url), w, h, childStep, pointStep, alpha, strokeWeightVal, shake);
+    obj = new SvgObj(loadShape(url), w, childStep, pointStep, alpha, strokeWeightVal, shake);
     obj.refineObj();
     obj.cleanObj();
     
@@ -34,16 +31,15 @@ void draw() {
   } else {
     background(0);
     
-    obj.draw(0, yPos);
-    yPos += vertStep;
+    obj.draw(0, 0);
     
     image(obj.gfx, 0, 0, width, height);
-    
-    //filter(INVERT);
-    
+       
     if (record) {
         String savePath = sketchPath("") + "/render/" + fileName + "_" + zeroPadding(counter++,10000) + ".png";
         obj.gfx.save(savePath);
     }
+    
+    if (obj.finished) exit();
   }
 }
