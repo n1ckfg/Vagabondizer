@@ -14,7 +14,7 @@ class SvgObj {
   float scaler;
   color bgColor;
   boolean finished = false;
-  boolean doClear = true;
+  boolean doClear = false;
   
   SvgObj(PShape _shape, int _w, int _childStep, int _pointStep, int _alpha, float _strokeWeightVal, float _shake) {
     shp = _shape;   

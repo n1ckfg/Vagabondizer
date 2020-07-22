@@ -11,19 +11,20 @@ Record
 true
 
 Child Step
-300
+1000
 
 Point Step
-100
+1
 
 Alpha
-127
+50
 
 Stroke
-0.5
+0.25
 
 Shake
-2
+1
 
 Refine
 true
+

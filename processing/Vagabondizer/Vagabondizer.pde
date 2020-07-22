@@ -17,7 +17,7 @@ Settings settings;
 
 void setup() {
   size(50, 50, P2D);
-  settings = new Settings("settings.txt");
+  settings = new Settings("data/settings.txt");
   frameRate(60);
 }
 
