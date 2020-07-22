@@ -14,6 +14,7 @@ class SvgObj {
   float scaler;
   color bgColor;
   boolean finished = false;
+  boolean doClear = true;
   
   SvgObj(PShape _shape, int _w, int _childStep, int _pointStep, int _alpha, float _strokeWeightVal, float _shake) {
     shp = _shape;   
@@ -109,6 +110,7 @@ class SvgObj {
   
   void draw(float x, float y) {   
     gfx.beginDraw();
+    if (doClear) gfx.clear();
     gfx.pushMatrix();
     gfx.translate(x, y);
     gfx.scale(scaler);

@@ -5,19 +5,19 @@ Render Width
 3840
 
 Window Scale
-4
+5
 
 Record
 true
 
 Child Step
-200
+300
 
 Point Step
-10
+100
 
 Alpha
-5
+127
 
 Stroke
 0.5

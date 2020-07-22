@@ -11,6 +11,7 @@ int pointStep = 15;
 int alpha = 35;
 float strokeWeightVal = 0.2;
 float shake = 2;
+int newW, newH;
 
 Settings settings;
 
@@ -28,14 +29,18 @@ void draw() {
       obj.refineObj();
       obj.cleanObj();
     }
-    surface.setSize(obj.w / scaler, obj.h / scaler);
+    newW = obj.gfx.width / scaler;
+    newH = obj.gfx.height / scaler;
+    surface.setSize(newW, newH);
+    
+    println("Render: " + obj.w + " x " + obj.h + "   Display: " + newW + " x " + newH);
     firstRun = false;
   } else {
     background(0);
     
     obj.draw(0, 0);
     
-    image(obj.gfx, 0, 0, width, height);
+    image(obj.gfx, 0, 0, newW, newH);
        
     if (record) {
         String savePath = sketchPath("") + "/render/" + fileName + "_" + zeroPadding(counter++,10000) + ".png";
