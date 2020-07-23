@@ -11,10 +11,10 @@ Record
 true
 
 Child Step
-1000
+100
 
 Point Step
-1
+10
 
 Alpha
 50
