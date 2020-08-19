@@ -145,7 +145,7 @@ void saveGraphics(PGraphics pg,boolean last) {
 void nextImage(int _n) {
   String imgFile = (String) imgNames.get(_n);
   //saveName = imgFile.split("\\/")[1].split("\\.")[0];
-  saveName = imgFile.split("[\\/]")[1].split("[.]")[0];
+  saveName = imgFile.split("[\\/]")[imgFile.split("[\\/]").length-1].split("[.]")[0];
   println(saveName);
   cg = new ContourGenerator(loadImage(imgFile));
   println("RENDERING source image " + (counter+1) + " of " + imgNames.size());
