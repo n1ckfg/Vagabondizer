@@ -8,7 +8,7 @@ Record
 true
 
 Child Step
-10
+20
 
 Point Step
 100
