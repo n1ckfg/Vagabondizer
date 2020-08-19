@@ -1,11 +1,8 @@
-Svg Url
-test2.svg
+Render Limit
+200
 
-Render Width
-3840
-
-Window Scale
-5
+Scale Window
+2
 
 Record
 true

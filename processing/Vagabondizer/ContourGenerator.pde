@@ -1,61 +1,63 @@
-import gab.opencv.*;
-
 class ContourGenerator {
   
-  OpenCV opencv;
-  int strokeLength, curStrokeLength, numSlices;
+  int numSlices;
   float approx, minArea;
   ArrayList<Contour> contours;
+  PImage img;
   PShape result;
+  SvgObj obj;
+  int renderCounter;
   
-  ContourGenerator(PApplet sketch, PImage _img) {
-    strokeLength = 40;
-    curStrokeLength = strokeLength;
+  ContourGenerator(PImage _img) {
+    img = _img;
+
     approx = 0.05;
     minArea = 20.0;
-    numSlices = 20;
-    
+    numSlices = 20;   
+      
     result = createShape(GROUP);
-    opencv = new OpenCV(sketch, _img);
+    setupOpenCv(img);
     doContours();
-    processContours(_img);
+    processContours(img);  
+    
+    renderCounter = 0;
+    firstRun = false;
   }
   
   void processContours(PImage _img) {
     for (int i=0; i<contours.size(); i++) {         
       Contour contour = contours.get(i);
       
-      if (contour.area() >= minArea) { 
-        ArrayList<PVector> pOrig = contour.getPolygonApproximation().getPoints();
-        ArrayList<PVector> p = new ArrayList<PVector>();
-        ArrayList<Integer> cols = new ArrayList<Integer>();
-        PVector firstPoint = pOrig.get(0);
+      if (contour.area() >= minArea) {         
+        ArrayList<PVector> p = contour.getPolygonApproximation().getPoints();
+        //println("Found a contour with " + p.size() + " points.");
         
-        color col = getColor(_img.pixels, firstPoint.x, firstPoint.y, _img.width); 
+        PShape child = createShape();
+        child.beginShape();
         
-        for (int j=0; j<pOrig.size(); j++) {
-          PVector pt = pOrig.get(j);
-          col = getColor(_img.pixels, pt.x, pt.y, _img.width);    
-          cols.add(col);
-          p.add(new PVector(pt.x / float(_img.width), 1.0 - (pt.y / float(_img.width))));
-        
-          if (p.size() > curStrokeLength || (j > pOrig.size()-1 && p.size() > 0)) {
-            PShape child = createShape();
-            child.beginShape();
-            for (int k=0; k<p.size(); k++) {
-              color c1 = cols.get(k);
-              child.stroke(red(c1), green(c1), blue(c1), 255);
-              PVector p1 = p.get(k);
-              child.vertex(p1.x, p1.y);
-            }
-            p = new ArrayList<PVector>();
-            curStrokeLength = int(random(strokeLength/2, strokeLength*2));
-            child.endShape();
-            result.addChild(child);
-          }
+        for (int j=0; j<p.size(); j++) {
+          PVector pt = p.get(j);
+          color col = getColor(_img.pixels, pt.x, pt.y, _img.width);    
+          child.stroke(col);
+          child.vertex(pt.x, pt.y);
         }
-      }            
+
+        child.endShape();
+        result.addChild(child);
+      }   
     }
+    
+    obj = new SvgObj(result, img, childStep, pointStep, alpha, strokeWeightVal, shake);
+    if (refine) {
+      obj.refineObj();
+      obj.cleanObj();
+    }
+    
+    newW = (int) obj.gfx.width / scaler;
+    newH = (int) obj.gfx.height / scaler;
+    surface.setSize(newW, newH);
+    
+    println("Render: " + obj.gfx.width + " x " + obj.gfx.height + ", Display: " + newW + " x " + newH);
   }
   
   void doContours() {
@@ -88,4 +90,19 @@ class ContourGenerator {
     return red(px[getLoc(x, y, w)]);
   }
 
+  void run() {    
+    obj.draw(0,0);
+    image(obj.gfx, 0, 0, width, height);
+    
+    if (record) {
+        String savePath = sketchPath("") + "/render/" + saveName + "_" + zeroPadding(renderCounter,10000) + ".png";
+        obj.gfx.save(savePath);
+    }
+    
+    renderCounter++;
+    if (obj.finished || renderCounter > renderLimit) {
+      renderCounter = 0;
+      fileLoop();
+    }
+  }
 }

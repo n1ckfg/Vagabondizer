@@ -10,15 +10,13 @@ File dataFolder;
 ArrayList imgNames;
 String fileName = "frame";
 boolean filesLoaded = false;
-ContourGenerator cg;
+String saveName;
 
-void filesLoadedChecker() {
-  if (filesLoaded) {
-    nextImage(counter);
-    //prepGraphics();
-    surface.setSize(img.width, img.height);
-    firstRun = false;
-  }
+void filesSetup() {
+  nextImage(counter);
+  //prepGraphics();
+  //surface.setSize(cg.img.width, cg.img.height);
+  firstRun = false;
 }
 
 void fileLoop() {
@@ -146,8 +144,11 @@ void saveGraphics(PGraphics pg,boolean last) {
 
 void nextImage(int _n) {
   String imgFile = (String) imgNames.get(_n);
-  createNewSvgObj(imgFile);
-  println("RENDERING frame " + (counter+1) + " of " + imgNames.size());
+  //saveName = imgFile.split("\\/")[1].split("\\.")[0];
+  saveName = imgFile.split("[\\/]")[1].split("[.]")[0];
+  println(saveName);
+  cg = new ContourGenerator(loadImage(imgFile));
+  println("RENDERING source image " + (counter+1) + " of " + imgNames.size());
 }
 
 String zeroPadding(int _val, int _maxVal){
@@ -162,22 +163,4 @@ float tween(float v1, float v2, float e) {
 
 void prepGraphics() {
   targetImg = createGraphics(img.width, img.height, P2D);
-}
-
-// ~ ~ ~ ~ ~
-
-void createNewSvgObj(String s) {
-  cg = new ContourGenerator(this, loadImage(s));
-
-  obj = new SvgObj(cg.result, w, childStep, pointStep, alpha, strokeWeightVal, shake);
-  if (refine) {
-    obj.refineObj();
-    obj.cleanObj();
-  }
-  newW = obj.gfx.width / scaler;
-  newH = obj.gfx.height / scaler;
-  surface.setSize(newW, newH);
-  
-  println("Render: " + obj.w + " x " + obj.h + "   Display: " + newW + " x " + newH);
-  firstRunNext = false;
 }

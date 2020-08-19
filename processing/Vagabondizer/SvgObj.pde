@@ -3,20 +3,17 @@ class SvgObj {
   PGraphics gfx;
   PShape shp;
   ArrayList<SvgObjChild> obj;
-  int w;
-  int h;
   int childCounter;
   int childStep;
   int pointStep;
   int alpha;
   float strokeWeightVal;
   float shake;
-  float scaler;
   color bgColor;
   boolean finished = false;
   boolean doClear = false;
   
-  SvgObj(PShape _shape, int _w, int _childStep, int _pointStep, int _alpha, float _strokeWeightVal, float _shake) {
+  SvgObj(PShape _shape, PImage _img, int _childStep, int _pointStep, int _alpha, float _strokeWeightVal, float _shake) {
     shp = _shape;   
     pointStep = _pointStep;
     childStep = _childStep;
@@ -25,10 +22,15 @@ class SvgObj {
     strokeWeightVal = _strokeWeightVal;
     
     childCounter = 0;
-    scaler = 1.0;
     bgColor = color(255);
     
-    init(_w);
+    gfx = createGraphics(_img.width, _img.height, P2D);
+    
+    obj = new ArrayList<SvgObjChild>();
+    
+    for (int i=0; i<shp.getChildCount(); i++) {
+      obj.add(new SvgObjChild(shp.getChild(i), gfx, pointStep, alpha, strokeWeightVal, shake));
+    }
   }
   
   void smoothObj() {
@@ -94,33 +96,15 @@ class SvgObj {
       return false;
     }
   }
-  
-  void init(int _w) {
-    w = _w;  
-    scaler = (float) w / (float) shp.width;
-    h = int(scaler * shp.height);
-    gfx = createGraphics(w, h, P2D);
-    
-    obj = new ArrayList<SvgObjChild>();
-    
-    for (int i=0; i<shp.getChildCount(); i++) {
-      obj.add(new SvgObjChild(shp.getChild(i), gfx, pointStep, alpha, strokeWeightVal, shake));
-    }
-  }
-  
+
   void draw(float x, float y) {   
     gfx.beginDraw();
     if (doClear) gfx.clear();
-    gfx.pushMatrix();
-    gfx.translate(x, y);
-    gfx.scale(scaler);
     
     for (int i=0; i<childCounter; i++) {
       obj.get(i).draw();
     }
-    
-    gfx.popMatrix();
-    
+        
     if (childCounter < obj.size() - childStep) {
       childCounter += childStep;
       finished = false;

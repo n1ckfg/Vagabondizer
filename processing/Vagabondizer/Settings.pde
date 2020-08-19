@@ -6,9 +6,8 @@ class Settings {
     try {
       data = loadStrings(_s);
       for (int i=0;i<data.length;i++) {
-        if (data[i].equals("Svg Url")) url = setString(data[i+1]);
-        if (data[i].equals("Render Width")) w = setInt(data[i+1]);
-        if (data[i].equals("Window Scale")) scaler = setInt(data[i+1]); 
+        if (data[i].equals("Render Limit")) renderLimit = setInt(data[i+1]); 
+        if (data[i].equals("Scale Window")) scaler = setInt(data[i+1]); 
         if (data[i].equals("Record")) record = setBoolean(data[i+1]); 
         if (data[i].equals("Refine")) refine = setBoolean(data[i+1]); 
         if (data[i].equals("Child Step")) childStep = setInt(data[i+1]); 
