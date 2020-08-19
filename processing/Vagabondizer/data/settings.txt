@@ -1,8 +1,8 @@
 Render Limit
-200
+100
 
 Scale Window
-2
+4
 
 Record
 true
