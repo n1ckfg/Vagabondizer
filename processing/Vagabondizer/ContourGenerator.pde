@@ -33,8 +33,7 @@ class ContourGenerator {
         //println("Found a contour with " + p.size() + " points.");
         
         PShape child = createShape();
-        child.beginShape();
-        
+        child.beginShape();        
         for (int j=0; j<p.size(); j++) {
           PVector pt = p.get(j);
           color col = getColor(_img.pixels, pt.x, pt.y, _img.width);    

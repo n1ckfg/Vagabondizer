@@ -17,7 +17,7 @@ Alpha
 50
 
 Stroke
-0.25
+1
 
 Shake
 1

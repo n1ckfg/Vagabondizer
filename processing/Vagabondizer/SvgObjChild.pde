@@ -10,8 +10,10 @@ class SvgObjChild {
   int alpha;
   float shake;
   boolean finished = false;
+  PShape shp;
   
   SvgObjChild(PShape _shape, PGraphics _gfx, int _pointStep, int _alpha, float _strokeWeightVal, float _shake) {
+    shp = _shape;
     gfx = _gfx;
     pointStep = _pointStep;
     alpha = _alpha;
@@ -21,32 +23,32 @@ class SvgObjChild {
     points = new ArrayList<PVector>();
     pointsCounter = 0;
     
-    try {
-      strokeColor = color(_shape.getStroke(0), alpha);
-    } catch (Exception e) {
-      strokeColor = color(0, alpha);
-    }
-    
-    try {
-      fillColor = color(_shape.getFill(0), alpha);
-    } catch (Exception e) {
-      fillColor = color(127, alpha);
-    }
-    
     for (int i=0; i<_shape.getVertexCount(); i++) {
       points.add(_shape.getVertex(i));
     }
   }
   
-  void setMaterial(boolean _doFill) {   
+  void setMaterial(int index, boolean _doFill) {   
     gfx.strokeWeight(strokeWeightVal);
 
+    try {
+      strokeColor = color(shp.getStroke(index), alpha);
+    } catch (Exception e) {
+      strokeColor = color(127, alpha);
+    }
+    
+    try {
+      fillColor = color(shp.getStroke(index), alpha);
+    } catch (Exception e) {
+      fillColor = color(127, alpha);
+    }
+    
     if (_doFill) {
         gfx.stroke(strokeColor);   
         gfx.fill(fillColor);
     } else {
         gfx.stroke(fillColor);   
-        gfx.noFill();    
+        gfx.noFill();
     }
   }
     
@@ -91,12 +93,11 @@ class SvgObjChild {
      }
   }
   
-  void draw() {
-    setMaterial(false); //true);
-  
+  void draw() {  
     gfx.beginShape();
     for (int i=0; i<pointsCounter; i++) {
       PVector p = points.get(i);
+      setMaterial(i, false); //true);
       if (shake > 0.001) {
         gfx.vertex(p.x + shake * (random(1) - 0.5), p.y + shake * (random(1) - 0.5));
       } else {
