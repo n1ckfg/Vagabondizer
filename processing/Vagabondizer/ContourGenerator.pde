@@ -51,6 +51,7 @@ class ContourGenerator {
     }
     
     obj = new SvgObj(result, img, childStep, pointStep, alpha, strokeWeightVal, shake);
+    obj.doClear = doClear;
     if (refine) {
       obj.refineObj();
       obj.cleanObj();

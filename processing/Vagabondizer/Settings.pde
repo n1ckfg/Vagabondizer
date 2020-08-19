@@ -6,6 +6,8 @@ class Settings {
     try {
       data = loadStrings(_s);
       for (int i=0;i<data.length;i++) {
+        if (data[i].equals("Use Fills")) useFills = setBoolean(data[i+1]); 
+        if (data[i].equals("Clear Background")) doClear = setBoolean(data[i+1]); 
         if (data[i].equals("Render Limit")) renderLimit = setInt(data[i+1]); 
         if (data[i].equals("Scale Window")) scaler = setInt(data[i+1]); 
         if (data[i].equals("Record")) record = setBoolean(data[i+1]); 

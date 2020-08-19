@@ -97,7 +97,7 @@ class SvgObjChild {
     gfx.beginShape();
     for (int i=0; i<pointsCounter; i++) {
       PVector p = points.get(i);
-      setMaterial(i, false); //true);
+      setMaterial(i, useFills); //true);
       if (shake > 0.001) {
         gfx.vertex(p.x + shake * (random(1) - 0.5), p.y + shake * (random(1) - 0.5));
       } else {

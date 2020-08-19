@@ -9,6 +9,8 @@ float shake = 2;
 int newW, newH;
 ContourGenerator cg;
 int renderLimit = 100;
+boolean doClear = false;
+boolean useFills = true;
 
 Settings settings;
 
