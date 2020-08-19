@@ -1,5 +1,5 @@
 SvgObj obj;
-boolean firstRun = true;
+boolean firstRunNext = true;
 
 String url = "test2.svg";
 int w = 1920;
@@ -17,24 +17,16 @@ Settings settings;
 
 void setup() {
   size(50, 50, P2D);
+  chooseFolderDialog();
+  
   settings = new Settings("data/settings.txt");
   frameRate(60);
 }
 
 
-void draw() { 
+void draw() {
   if (firstRun) {
-    obj = new SvgObj(loadShape(url), w, childStep, pointStep, alpha, strokeWeightVal, shake);
-    if (refine) {
-      obj.refineObj();
-      obj.cleanObj();
-    }
-    newW = obj.gfx.width / scaler;
-    newH = obj.gfx.height / scaler;
-    surface.setSize(newW, newH);
-    
-    println("Render: " + obj.w + " x " + obj.h + "   Display: " + newW + " x " + newH);
-    firstRun = false;
+    filesLoadedChecker();
   } else {
     background(0);
     
@@ -47,6 +39,6 @@ void draw() {
         obj.gfx.save(savePath);
     }
     
-    if (obj.finished) exit();
+    if (obj.finished) fileLoop();
   }
 }

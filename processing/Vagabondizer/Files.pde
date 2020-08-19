@@ -1,36 +1,74 @@
-//import java.awt.Desktop;
+import java.awt.Desktop;
 
 PImage img;
+PGraphics targetImg;
 int counter=0;
-
+boolean firstRun = true;
 String openFilePath = "render";
-String folderPath;
+String folderPath, filePath;
 File dataFolder;
 ArrayList imgNames;
 String fileName = "frame";
 boolean filesLoaded = false;
+ContourGenerator cg;
 
-//~~~~~~~~~~~~~~~~~~~~~~~~
-//choose folder dialog, Processing 2 version
-
-void loadFiles() {
-  chooseFolderDialog();
-  filesLoadedChecker();
+void filesLoadedChecker() {
+  if (filesLoaded) {
+    nextImage(counter);
+    //prepGraphics();
+    surface.setSize(img.width, img.height);
+    firstRun = false;
+  }
 }
 
-void chooseFolderDialog(){
-    selectFolder("Choose a PNG, JPG, GIF, or TGA sequence.","chooseFolderCallback");  // Opens file chooser
+void fileLoop() {
+  if (counter<imgNames.size()-1) {
+    //saveGraphics(targetImg, false); //don't exit
+    counter++;
+    nextImage(counter);
+    //prepGraphics();
+  } else {
+    //saveGraphics(targetImg, true); //exit
+  }
 }
 
-void chooseFolderCallback(File selection){
+void chooseFileDialog() {
+    selectInput("Choose a PNG, JPG, GIF, or TGA file.","chooseFileCallback");  
+}
+
+void chooseFileCallback(File selection){
+    if (selection == null) {
+      println("No folder was selected.");
+      exit();
+    } else {
+      filePath = selection.getAbsolutePath();
+      println(filePath);
+      // TODO
+    }
+}
+
+void chooseFolderDialog() {
+    selectFolder("Choose a PNG, JPG, GIF, or TGA sequence.","chooseFolderCallback");
+}
+
+void chooseFolderCallback(File selection) {
     if (selection == null) {
       println("No folder was selected.");
       exit();
     } else {
       folderPath = selection.getAbsolutePath();
       println(folderPath);
-      countFrames(folderPath);
+      countFrames(folderPath);     
     }
+}
+
+boolean isImage(String s) {
+  s = s.toLowerCase();
+  if (s.endsWith("png") || s.endsWith("jpg") || s.endsWith("jpeg") || s.endsWith("gif") || s.endsWith("tga")) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 void countFrames(String usePath) {
@@ -39,18 +77,11 @@ void countFrames(String usePath) {
     dataFolder = new File(usePath); 
     String[] allFiles = dataFolder.list();
     for (int j=0;j<allFiles.length;j++) {
-      if (
-        allFiles[j].toLowerCase().endsWith("png") ||
-        allFiles[j].toLowerCase().endsWith("jpg") ||
-        allFiles[j].toLowerCase().endsWith("jpeg") ||
-        allFiles[j].toLowerCase().endsWith("gif") ||
-        allFiles[j].toLowerCase().endsWith("tga")){
-          imgNames.add(usePath+"/"+allFiles[j]);
-        }
+      if (isImage(allFiles[j])) imgNames.add(usePath+"/"+allFiles[j]);
     }
-    if(imgNames.size()<=0){
+    if (imgNames.size()<=0) {
       exit();
-    }else{
+    } else {
       // We need this because Processing 2, unlike Processing 1, will not automatically wait to let you pick a folder!
       String s;
       if (imgNames.size() == 1) {
@@ -63,35 +94,24 @@ void countFrames(String usePath) {
     }
 }
 
-void filesLoadedChecker() {
-  // We need this because Processing 2, unlike Processing 1, will not automatically wait to let you pick a folder!
-  while(!filesLoaded){
-    try{
-      if(imgNames.size() > 0) img = loadImage((String) imgNames.get(0));
-    }catch(Exception e){ 
-      filesLoaded = false;
-    }
-  }
-}
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //reveal folder, processing 2 version
 
-/*
-void openAppFolderHandler(){
-  if(System.getProperty("os.name").equals("Mac OS X")){
-    try{
+void openAppFolderHandler() {
+  if (System.getProperty("os.name").equals("Mac OS X")) {
+    try {
       print("Trying OS X Finder method.");
-      open(sketchPath(openFilePath));
+      //open(sketchPath(openFilePath));
+      Desktop.getDesktop().open(new File(sketchPath("") + "/" + openFilePath));
       //open(sketchPath("ManosOsc.app/Contents/Resources/Java/" + openFilePath));
-    }catch(Exception e){ }
-  }else{
-    try{
+    } catch (Exception e){ }
+  } else {
+    try {
       print("Trying Windows Explorer method.");
       Desktop.getDesktop().open(new File(sketchPath("") + "/" + openFilePath));
-    }catch(Exception e){ }
+    } catch (Exception e) { }
   }
 }
-*/
 
 //run at startup if you want to use app data folder--not another folder.
 //This accounts for different locations and OS conventions
@@ -110,24 +130,24 @@ void scriptsFolderHandler(){
   }
 }
 
-void saveGraphics(PGraphics pg,boolean last){
-  try{
+void saveGraphics(PGraphics pg,boolean last) {
+  try {
     String savePath = openFilePath + "/" + fileName + "_" + zeroPadding(counter+1,imgNames.size()) + ".png";
     pg.save(savePath); 
     println("SAVED " + savePath);
-  }catch(Exception e){
+  } catch(Exception e) {
     println("Failed to save file.");  
   }
-  if(last) {
-    //openAppFolderHandler();
+  if (last) {
+    openAppFolderHandler();
     exit();
   }
 }
 
-void nextImage(int _n){
+void nextImage(int _n) {
   String imgFile = (String) imgNames.get(_n);
-  img = loadImage(imgFile);
-  println("LOADED " + imgFile);
+  createNewSvgObj(imgFile);
+  println("RENDERING frame " + (counter+1) + " of " + imgNames.size());
 }
 
 String zeroPadding(int _val, int _maxVal){
@@ -138,4 +158,26 @@ String zeroPadding(int _val, int _maxVal){
 float tween(float v1, float v2, float e) {
   v1 += (v2-v1)/e;
   return v1;
+}
+
+void prepGraphics() {
+  targetImg = createGraphics(img.width, img.height, P2D);
+}
+
+// ~ ~ ~ ~ ~
+
+void createNewSvgObj(String s) {
+  cg = new ContourGenerator(this, loadImage(s));
+
+  obj = new SvgObj(cg.result, w, childStep, pointStep, alpha, strokeWeightVal, shake);
+  if (refine) {
+    obj.refineObj();
+    obj.cleanObj();
+  }
+  newW = obj.gfx.width / scaler;
+  newH = obj.gfx.height / scaler;
+  surface.setSize(newW, newH);
+  
+  println("Render: " + obj.w + " x " + obj.h + "   Display: " + newW + " x " + newH);
+  firstRunNext = false;
 }
