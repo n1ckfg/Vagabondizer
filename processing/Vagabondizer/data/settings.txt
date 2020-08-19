@@ -20,8 +20,8 @@ Stroke
 1
 
 Shake
-1
+4
 
 Refine
-true
+false
 

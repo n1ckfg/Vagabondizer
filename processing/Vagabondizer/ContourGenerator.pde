@@ -1,3 +1,5 @@
+import java.util.Collections;
+
 class ContourGenerator {
   
   int numSlices;
@@ -25,6 +27,8 @@ class ContourGenerator {
   }
   
   void processContours(PImage _img) {
+    Collections.reverse(contours); // draw from top down instead of bottom up
+    
     for (int i=0; i<contours.size(); i++) {         
       Contour contour = contours.get(i);
       
@@ -94,7 +98,7 @@ class ContourGenerator {
     image(obj.gfx, 0, 0, width, height);
     
     if (record) {
-        String savePath = sketchPath("") + "/render/" + saveName + "_" + zeroPadding(renderCounter,10000) + ".png";
+        String savePath = sketchPath("") + "/render/" + saveName + "/" + saveName + "_" + zeroPadding(renderCounter,10000) + ".png";
         obj.gfx.save(savePath);
     }
     
