@@ -130,7 +130,8 @@ void scriptsFolderHandler(){
 
 void saveGraphics(PGraphics pg,boolean last) {
   try {
-    String savePath = openFilePath + "/" + fileName + "_" + zeroPadding(counter+1,imgNames.size()) + ".png";
+    //String savePath = sketchPath("") + openFilePath + "/" + fileName + "_" + zeroPadding(counter+1,imgNames.size()) + ".png";
+    String savePath = sketchPath("") + "/render/" + fileName + "_" + zeroPadding(counter+1,imgNames.size()) + ".png";
     pg.save(savePath); 
     println("SAVED " + savePath);
   } catch(Exception e) {
