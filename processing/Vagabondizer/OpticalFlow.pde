@@ -1,5 +1,3 @@
-import gab.opencv2.*;
-
 OpenCV opencv2;
 int levelOfDetails = 2;
 int videoScale = 8;
@@ -15,8 +13,8 @@ PGraphics texScale;
 void opticalFlowSetup() {
   sW = width;
   sH = height;
-  videoWidth = tex.width / videoScale;
-  videoHeight = tex.height / videoScale;
+  videoWidth = cg.obj.gfx.width / videoScale;
+  videoHeight = cg.obj.gfx.height / videoScale;
   texScale = createGraphics(videoWidth, videoHeight, P2D);
 
   opencv2 = new OpenCV(this, videoWidth, videoHeight);
@@ -40,7 +38,7 @@ void opticalFlowSetup() {
 void opticalFlowDraw() {
   opencv2.useGray();
   texScale.beginDraw();
-  texScale.image(tex, 0, 0, texScale.width, texScale.height);
+  texScale.image(cg.obj.gfx, 0, 0, texScale.width, texScale.height);
   texScale.endDraw();
   opencv2.loadImage(texScale);
   opencv2.calculateOpticalFlow();
@@ -85,11 +83,11 @@ void opticalFlowDraw() {
   bufferWrite.endDraw();
 
   // draw final render
-  tex.beginDraw();
-  tex.blendMode(LIGHTEST);
-  tex.image(bufferWrite, 0, 0, tex.width, tex.height);
-  tex.blendMode(BLEND);
-  tex.endDraw();  
+  cg.obj.gfx.beginDraw();
+  cg.obj.gfx.blendMode(LIGHTEST);
+  cg.obj.gfx.image(bufferWrite, 0, 0, cg.obj.gfx.width, cg.obj.gfx.height);
+  cg.obj.gfx.blendMode(BLEND);
+  cg.obj.gfx.endDraw();  
 }
 
 // the current frame buffer

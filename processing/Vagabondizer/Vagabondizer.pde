@@ -18,17 +18,17 @@ void setup() {
   size(50, 50, P2D);
   settings = new Settings("data/settings.txt"); 
   frameRate(60); 
-  bloomSetup();
-  opticalFlowSetup();
-  
+
   chooseFolderDialog();
 }
 
 
 void draw() {
-    if (filesLoaded) {
-      if (firstRun) {
+  if (filesLoaded) {
+    if (firstRun) {
       filesSetup();
+      bloomSetup();
+      opticalFlowSetup();  
     } else {
       try {
         background(0);
