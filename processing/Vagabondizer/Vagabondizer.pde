@@ -27,8 +27,8 @@ void draw() {
     if (firstRun) {
       filesSetup();
       bloomSetup();
-      opticalFlowSetup();  
-    } else {
+      firstRun = false;
+     } else {
       try {
         background(0);
         cg.run();

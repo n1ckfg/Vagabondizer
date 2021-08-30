@@ -11,22 +11,18 @@ ArrayList imgNames;
 String fileName = "frame";
 boolean filesLoaded = false;
 String saveName;
+String exportFileType = "png";
 
 void filesSetup() {
   nextImage(counter);
-  //prepGraphics();
-  //surface.setSize(cg.img.width, cg.img.height);
-  firstRun = false;
 }
 
 void fileLoop() {
   if (counter<imgNames.size()-1) {
-    //saveGraphics(targetImg, false); //don't exit
     counter++;
     nextImage(counter);
-    //prepGraphics();
   } else {
-    //saveGraphics(targetImg, true); //exit
+    exit();
   }
 }
 
@@ -41,7 +37,6 @@ void chooseFileCallback(File selection){
     } else {
       filePath = selection.getAbsolutePath();
       println(filePath);
-      // TODO
     }
 }
 
@@ -99,9 +94,7 @@ void openAppFolderHandler() {
   if (System.getProperty("os.name").equals("Mac OS X")) {
     try {
       print("Trying OS X Finder method.");
-      //open(sketchPath(openFilePath));
       Desktop.getDesktop().open(new File(sketchPath("") + "/" + openFilePath));
-      //open(sketchPath("ManosOsc.app/Contents/Resources/Java/" + openFilePath));
     } catch (Exception e){ }
   } else {
     try {
@@ -128,10 +121,10 @@ void scriptsFolderHandler(){
   }
 }
 
+/*
 void saveGraphics(PGraphics pg,boolean last) {
   try {
-    //String savePath = sketchPath("") + openFilePath + "/" + fileName + "_" + zeroPadding(counter+1,imgNames.size()) + ".png";
-    String savePath = sketchPath("") + "/render/" + fileName + "_" + zeroPadding(counter+1,imgNames.size()) + ".png";
+    String savePath = sketchPath("") + "/render/" + fileName + "_" + zeroPadding(counter+1,imgNames.size()) + "." + exportFileType;
     pg.save(savePath); 
     println("SAVED " + savePath);
   } catch(Exception e) {
@@ -142,14 +135,15 @@ void saveGraphics(PGraphics pg,boolean last) {
     exit();
   }
 }
+*/
 
 void nextImage(int _n) {
   String imgFile = (String) imgNames.get(_n);
-  //saveName = imgFile.split("\\/")[1].split("\\.")[0];
   saveName = imgFile.split("[\\/]")[imgFile.split("[\\/]").length-1].split("[.]")[0];
   println(saveName);
   cg = new ContourGenerator(loadImage(imgFile));
   println("RENDERING source image " + (counter+1) + " of " + imgNames.size());
+  opticalFlowSetup();  
 }
 
 String zeroPadding(int _val, int _maxVal){

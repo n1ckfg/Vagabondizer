@@ -6,6 +6,7 @@ class Settings {
     try {
       data = loadStrings(_s);
       for (int i=0;i<data.length;i++) {
+        if (data[i].equals("Export File Type")) exportFileType = setString(data[i+1]); 
         if (data[i].equals("Use Fills")) useFills = setBoolean(data[i+1]); 
         if (data[i].equals("Clear Background")) doClear = setBoolean(data[i+1]); 
         if (data[i].equals("Render Limit")) renderLimit = setInt(data[i+1]); 
@@ -17,7 +18,7 @@ class Settings {
         if (data[i].equals("Alpha")) alpha = setInt(data[i+1]); 
         if (data[i].equals("Stroke")) strokeWeightVal = setFloat(data[i+1]); 
         if (data[i].equals("Shake")) shake = setFloat(data[i+1]); 
-        if (data[i].equals("Bloom Mult")) bloomMult = setFloat(data[i+1]); 
+        if (data[i].equals("Bloom Strength")) bloomMult = setFloat(data[i+1]); 
         if (data[i].equals("Bloom Radius")) bloomRadius = setFloat(data[i+1]); 
         if (data[i].equals("Optical Flow Detail")) levelOfDetail = setInt(data[i+1]); 
         if (data[i].equals("Optical Flow Scale")) videoScale = setInt(data[i+1]); 

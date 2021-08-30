@@ -106,7 +106,7 @@ class ContourGenerator {
     image(obj.gfx, 0, 0, width, height);
     
     if (record) {
-        String savePath = sketchPath("") + "/render/" + saveName + "/" + saveName + "_" + zeroPadding(renderCounter,10000) + ".png";
+        String savePath = sketchPath("") + "/render/" + saveName + "/" + saveName + "_" + zeroPadding(renderCounter,10000) + "." + exportFileType;
         obj.gfx.save(savePath);
     }
     

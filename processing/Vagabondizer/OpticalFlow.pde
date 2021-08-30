@@ -7,31 +7,35 @@ PShader shaderBuffer;
 PGraphics[] renderArray;
 int currentRender;
 float lerpSpeed = 0.05;
-int sW, sH;
 PGraphics texScale;
+PGraphics opticalFlowFinalGfx;
 
 void opticalFlowSetup() {
-  sW = cg.obj.gfx.width;
-  sH = cg.obj.gfx.height;
   videoWidth = cg.obj.gfx.width / videoScale;
   videoHeight = cg.obj.gfx.height / videoScale;
-  texScale = createGraphics(videoWidth, videoHeight, P2D);
-
   opencv2 = new OpenCV(this, videoWidth, videoHeight);
+  
+  opticalFlowInit();
+}
+
+void opticalFlowInit() {
+  texScale = createGraphics(videoWidth, videoHeight, P2D);
+  opticalFlowFinalGfx = createGraphics(cg.obj.gfx.width, cg.obj.gfx.height, P2D);
+
   motionTexture = createImage(videoWidth / levelOfDetail, videoHeight / levelOfDetail, RGB);
   shaderBuffer = loadShader("shaders/Buffer.frag", "shaders/Simple.vert");
   renderArray = new PGraphics[2];
   currentRender = 0;
   
   for (int i = 0; i < renderArray.length; i++) {
-    renderArray[i] = createGraphics(sW, sH, P2D);
+    renderArray[i] = createGraphics(videoWidth, videoHeight, P2D);
 
     renderArray[i].beginDraw();
     renderArray[i].background(0);
     renderArray[i].endDraw();
 
     // nearest filter mode
-    ((PGraphicsOpenGL)renderArray[i]).textureSampling(2);
+    ((PGraphicsOpenGL) renderArray[i]).textureSampling(2);
   }
 }
 
@@ -78,16 +82,14 @@ void opticalFlowDraw() {
 
   // apply pixel displacement with shader
   bufferWrite.shader(shaderBuffer);
-  bufferWrite.rect(0, 0, sW, sH);
+  bufferWrite.rect(0, 0, videoWidth, videoHeight);
 
   bufferWrite.endDraw();
 
   // draw final render
-  cg.obj.gfx.beginDraw();
-  cg.obj.gfx.blendMode(LIGHTEST);
-  cg.obj.gfx.image(bufferWrite, 0, 0, cg.obj.gfx.width, cg.obj.gfx.height);
-  cg.obj.gfx.blendMode(BLEND);
-  cg.obj.gfx.endDraw();  
+  opticalFlowFinalGfx.beginDraw();
+  opticalFlowFinalGfx.image(bufferWrite, 0, 0, cg.obj.gfx.width, cg.obj.gfx.height);
+  opticalFlowFinalGfx.endDraw();
 }
 
 // the current frame buffer

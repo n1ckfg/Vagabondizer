@@ -111,11 +111,16 @@ class SvgObj {
     } else {
       childCounter = obj.size() - 1;
     }
+    gfx.endDraw();
     
-    // * * * * * * * * * * *
+    // optical flow calculations need to happen outside of the draw loop
     opticalFlowDraw();
+    
+    gfx.beginDraw();
+    gfx.blendMode(LIGHTEST);
+    gfx.image(opticalFlowFinalGfx, 0, 0);
+    gfx.blendMode(BLEND);
     filter.bloom.apply(gfx);
-    // * * * * * * * * * * *
     gfx.endDraw();
 
     for (int i=0; i<obj.size(); i++) {

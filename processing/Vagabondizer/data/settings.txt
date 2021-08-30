@@ -1,11 +1,26 @@
+Export File Type
+jpg
+
 Render Limit
 100
 
 Scale Window
-1
+2
 
 Record
 true
+
+Bloom Strength
+0.3
+
+Bloom Radius
+0.5
+
+Optical Flow Detail
+2
+
+Optical Flow Scale
+8
 
 Child Step
 20
@@ -31,15 +46,4 @@ true
 Use Fills
 true
 
-Bloom Mult
-0.1
-
-Bloom Radius
-0.5
-
-Optical Flow Detail
-2
-
-Optical Flow Scale
-1
 
