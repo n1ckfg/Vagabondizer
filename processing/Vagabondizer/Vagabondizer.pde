@@ -21,8 +21,7 @@ void setup() {
 
   chooseFolderDialog();
 }
-
-
+ 
 void draw() {
   if (filesLoaded) {
     if (firstRun) {

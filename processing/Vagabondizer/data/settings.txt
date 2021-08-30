@@ -2,7 +2,7 @@ Render Limit
 100
 
 Scale Window
-4
+1
 
 Record
 true
@@ -30,3 +30,16 @@ true
 
 Use Fills
 true
+
+Bloom Mult
+0.1
+
+Bloom Radius
+0.5
+
+Optical Flow Detail
+2
+
+Optical Flow Scale
+1
+

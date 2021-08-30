@@ -1,6 +1,6 @@
 class SvgObj {
   
-  PGraphics gfx;
+  PGraphics2D gfx;
   PShape shp;
   ArrayList<SvgObjChild> obj;
   int childCounter;
@@ -24,7 +24,7 @@ class SvgObj {
     childCounter = 0;
     bgColor = color(255);
     
-    gfx = createGraphics(_img.width, _img.height, P2D);
+    gfx = (PGraphics2D) createGraphics(_img.width, _img.height, P2D);
     
     obj = new ArrayList<SvgObjChild>();
     
@@ -112,6 +112,10 @@ class SvgObj {
       childCounter = obj.size() - 1;
     }
     
+    // * * * * * * * * * * *
+    opticalFlowDraw();
+    filter.bloom.apply(gfx);
+    // * * * * * * * * * * *
     gfx.endDraw();
 
     for (int i=0; i<obj.size(); i++) {

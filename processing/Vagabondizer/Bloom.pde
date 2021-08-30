@@ -5,20 +5,12 @@ import processing.opengl.PGraphics3D;
 
 DwPixelFlow context;
 DwFilter filter;
-//PGraphics2D tex;
+float bloomMult = 0.3; //3.5; // 0.0-10.0
+float bloomRadius = 0.5; //0.5; // 0.0-1.0
 
-void bloomSetup() {
-  //tex = (PGraphics2D) createGraphics(sW, sH, P2D);
-  //tex.noSmooth();
-  
+void bloomSetup() { 
   context = new DwPixelFlow(this);
   filter = new DwFilter(context);
-  //filter.bloom.setBlurLayers(10);
-  filter.bloom.param.mult = 0.3; //3.5; // 0.0-10.0
-  filter.bloom.param.radius = 0.5; //0.5; // 0.0-1.0
-}
-
-void bloomDraw() {
-  //filter.bloom.apply(tex);
-  //image(tex, 0, 0, width, height);
+  filter.bloom.param.mult = bloomMult;
+  filter.bloom.param.radius =  bloomRadius;
 }

@@ -1,5 +1,5 @@
 OpenCV opencv2;
-int levelOfDetails = 2;
+int levelOfDetail = 2;
 int videoScale = 8;
 int videoWidth, videoHeight;
 PImage motionTexture;
@@ -11,14 +11,14 @@ int sW, sH;
 PGraphics texScale;
 
 void opticalFlowSetup() {
-  sW = width;
-  sH = height;
+  sW = cg.obj.gfx.width;
+  sH = cg.obj.gfx.height;
   videoWidth = cg.obj.gfx.width / videoScale;
   videoHeight = cg.obj.gfx.height / videoScale;
   texScale = createGraphics(videoWidth, videoHeight, P2D);
 
   opencv2 = new OpenCV(this, videoWidth, videoHeight);
-  motionTexture = createImage(videoWidth / levelOfDetails, videoHeight / levelOfDetails, RGB);
+  motionTexture = createImage(videoWidth / levelOfDetail, videoHeight / levelOfDetail, RGB);
   shaderBuffer = loadShader("shaders/Buffer.frag", "shaders/Simple.vert");
   renderArray = new PGraphics[2];
   currentRender = 0;
@@ -48,7 +48,7 @@ void opticalFlowDraw() {
   for (int x = 0; x < motionTexture.width; x++) {
     for (int y = 0; y < motionTexture.height; y++) {
       // get the vector motion from openCV
-      PVector motion = opencv2.getFlowAt(x * levelOfDetails, y * levelOfDetails);
+      PVector motion = opencv2.getFlowAt(x * levelOfDetail, y * levelOfDetail);
 
       PVector direction = getNormal(motion.x, motion.y);
 

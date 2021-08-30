@@ -17,6 +17,10 @@ class Settings {
         if (data[i].equals("Alpha")) alpha = setInt(data[i+1]); 
         if (data[i].equals("Stroke")) strokeWeightVal = setFloat(data[i+1]); 
         if (data[i].equals("Shake")) shake = setFloat(data[i+1]); 
+        if (data[i].equals("Bloom Mult")) bloomMult = setFloat(data[i+1]); 
+        if (data[i].equals("Bloom Radius")) bloomRadius = setFloat(data[i+1]); 
+        if (data[i].equals("Optical Flow Detail")) levelOfDetail = setInt(data[i+1]); 
+        if (data[i].equals("Optical Flow Scale")) videoScale = setInt(data[i+1]); 
       }
     } 
     catch(Exception e) {
