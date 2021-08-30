@@ -18,7 +18,9 @@ void setup() {
   size(50, 50, P2D);
   settings = new Settings("data/settings.txt"); 
   frameRate(60); 
-
+  bloomSetup();
+  opticalFlowSetup();
+  
   chooseFolderDialog();
 }
 
