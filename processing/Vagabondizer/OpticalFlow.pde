@@ -31,7 +31,7 @@ void opticalFlowInit() {
     renderArray[i] = createGraphics(videoWidth, videoHeight, P2D);
 
     renderArray[i].beginDraw();
-    renderArray[i].background(0);
+    renderArray[i].background(0,0);
     renderArray[i].endDraw();
 
     // nearest filter mode

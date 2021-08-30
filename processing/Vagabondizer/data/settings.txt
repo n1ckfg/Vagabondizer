@@ -1,5 +1,5 @@
 Export File Type
-jpg
+png
 
 Render Limit
 100
@@ -20,7 +20,7 @@ Optical Flow Detail
 2
 
 Optical Flow Scale
-8
+2
 
 Child Step
 20
